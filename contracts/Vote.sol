@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.25 <0.7.0;
-import "./Manageable.sol";
+import "./Manageable";
 
 contract Vote is Manangeable {
     address[10] public top10;
@@ -15,7 +15,8 @@ contract Vote is Manangeable {
         candidateOnlyInVoter(candidate)
     {
         if (voted[msg.sender] != address(0)) {
-            tally[voted[msg.sender]]--; // 投票数有限，这里省去了溢出检查
+            // vote limit, we don't need to think about overflow problem
+            tally[voted[msg.sender]]--;
         }
         voted[msg.sender] = candidate;
         tally[candidate]++;
